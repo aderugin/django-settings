@@ -8,7 +8,7 @@ setup(
     author='Derugin Anton',
     author_email='anton.derugin@gmail.com',
     description='A simple extension to make settings for Django',
-    packages=['django_settings'],
+    packages=['django_settings', 'django_settings/templatetags'],
     zip_safe=False,
     include_package_data=True,
     platforms='any',
