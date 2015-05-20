@@ -24,7 +24,7 @@ class BaseSettingsModel(models.Model):
         settings = cls.objects.first()
         if settings:
             return getattr(settings, name, '')
-        return None
+        return ''
 
     def __unicode__(self):
         return SETTINGS_TITLE
