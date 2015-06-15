@@ -8,7 +8,7 @@ from .config import *
 from . import settings_model
 
 
-def context_processor(self):
+def context_processor(request):
     return {'settings': settings_model.objects.first()}
 
 
@@ -40,7 +40,7 @@ class BaseSettingsAdmin(admin.ModelAdmin):
             return True
 
     def changelist_view(self, request, extra_context=None):
-        info = '{0}_{1}'.format(self.model._meta.app_label, self.model._meta.module_name)
+        info = '{0}_{1}'.format(self.model._meta.app_label, self.model._meta.model_name)
 
         try:
             instance = self.model.objects.get()
