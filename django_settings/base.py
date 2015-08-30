@@ -26,6 +26,10 @@ class BaseSettingsModel(models.Model):
             return getattr(settings, name, '')
         return ''
 
+    @classmethod
+    def get_instance(cls):
+        return cls.objects.first()
+
     def __unicode__(self):
         return SETTINGS_TITLE
 
