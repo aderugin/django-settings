@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import template
-from .. import settings_model
+from django_settings import settings_model
 
 
 register = template.Library()

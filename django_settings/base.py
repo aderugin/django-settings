@@ -3,15 +3,18 @@ from django.contrib import admin
 from django.db import models
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
+from django.dispatch import receiver
+from django.utils.encoding import python_2_unicode_compatible
 
-from .config import *
-from . import settings_model
+from django_settings.config import SETTINGS_TITLE
+from django_settings import settings_model
 
 
 def context_processor(request):
-    return {'settings': settings_model.objects.first()}
+    return {'settings': settings_model.get_instance()}
 
 
+@python_2_unicode_compatible
 class BaseSettingsModel(models.Model):
 
     class Meta:
@@ -21,17 +24,22 @@ class BaseSettingsModel(models.Model):
 
     @classmethod
     def get_option(cls, name):
-        settings = cls.objects.first()
-        if settings:
-            return getattr(settings, name, '')
-        return ''
+        return getattr(cls.get_instance(), name, '')
 
     @classmethod
     def get_instance(cls):
-        return cls.objects.first()
+        if not hasattr(cls, '_instance'):
+            cls._instance, created = cls.objects.get_or_create()
+        return cls._instance
 
-    def __unicode__(self):
+    def __str__(self):
         return SETTINGS_TITLE
+
+
+@receiver(models.signals.post_save)
+def on_settings_change(sender, **kwargs):
+    if issubclass(sender, BaseSettingsModel):
+        delattr(sender, '_instance')
 
 
 class BaseSettingsAdmin(admin.ModelAdmin):
