@@ -37,9 +37,12 @@ class BaseSettingsModel(models.Model):
 
 
 @receiver(models.signals.post_save)
-def on_settings_change(sender, **kwargs):
+def settings_change_handler(sender, **kwargs):
     if issubclass(sender, BaseSettingsModel):
-        delattr(sender, '_instance')
+        try:
+            delattr(sender, '_instance')
+        except AttributeError:
+            pass
 
 
 class BaseSettingsAdmin(admin.ModelAdmin):

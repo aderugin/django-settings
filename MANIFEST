@@ -4,3 +4,5 @@ django_settings/__init__.py
 django_settings/base.py
 django_settings/config.py
 django_settings/utils.py
+django_settings/templatetags/__init__.py
+django_settings/templatetags/django_settings_tags.py

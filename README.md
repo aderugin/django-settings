@@ -1,3 +1,5 @@
+django 1.7+, python 2.7, python 3.4+
+
 ## Установка
 
 * `pip install git+git://github.com/aderugin/django-settings.git`
