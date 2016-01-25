@@ -28,21 +28,11 @@ class BaseSettingsModel(models.Model):
 
     @classmethod
     def get_instance(cls):
-        if not hasattr(cls, '_instance'):
-            cls._instance, created = cls.objects.get_or_create()
-        return cls._instance
+        instance, _ = cls.objects.get_or_create()
+        return instance
 
     def __str__(self):
         return SETTINGS_TITLE
-
-
-@receiver(models.signals.post_save)
-def settings_change_handler(sender, **kwargs):
-    if issubclass(sender, BaseSettingsModel):
-        try:
-            delattr(sender, '_instance')
-        except AttributeError:
-            pass
 
 
 class BaseSettingsAdmin(admin.ModelAdmin):
