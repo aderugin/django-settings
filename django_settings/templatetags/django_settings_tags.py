@@ -2,7 +2,6 @@
 from django import template
 from django_settings import settings_model
 
-
 register = template.Library()
 
 
